@@ -2,7 +2,7 @@
     Made by Monnapse
 
     Number Abbreviator
-    
+
     @0.1.0
 --]]
 
@@ -117,7 +117,25 @@ numbers.Notations = {
     }
 }
 
-function numbers.FormatNumber(Number: number, NameLength: NameType, DecimalPlaces: number?)
+--[[
+    Adds commas to number
+    1000000 -> 1,000,000
+--]]
+
+function numbers.formatNumber(number)
+    local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
+  
+    int = int:reverse():gsub("(%d%d%d)", "%1,")
+  
+    return minus..int:reverse():gsub("^,", "")..fraction
+end
+
+--[[
+    abbreviates number
+    1000000 -> 1M
+    1100000 -> 1.1M
+--]]
+function numbers.abbreviateNumber(Number: number, NameLength: NameType, DecimalPlaces: number?)
     local NameLength = NameLength.Name
     local NumberValue = Number
     local Index
